@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Your Name] :: Interactive Portfolio</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    
+    <style>
+        /* * Retro 8-Bit Interactive Portfolio Stylesheet
+         * Engineer: A UI/UX Expert
+         * Date: 2025-09-21
+         * Version: 9.2 -- The Console Update
+        */
+
+        :root {
+            /* --- Dark Mode (Default) --- */
+            --background-color: #000011;
+            --bezel-color-dark: #222;
+            --bezel-color-light: #555;
+            --stand-color: #333;
+            --text-color: #00ff7f;
+            --header-color: #ffb000;
+            --accent-color: #ff3366;
+            --border-color: #4a5a6a;
+            --window-bg: #0a141e;
+            --nebula-1: rgba(100, 100, 200, 0.2);
+            --nebula-2: rgba(200, 100, 100, 0.2);
+            --planet-1: rgba(224, 108, 80, 0.4); /* Mars */
+            --planet-2: rgba(216, 202, 184, 0.4); /* Jupiter */
+            --planet-3: rgba(243, 219, 163, 0.3); /* Venus */
+            --stars: white;
+            
+            --color-readme: #3366cc;
+            --color-education: #3366cc;
+            --color-skills: #3366cc;
+            --color-projects: #3366cc;
+            --color-name: #f7e252;
+
+            --decoration-guitar: #c5a78b;
+            --decoration-snitch: #f7e252;
+            --decoration-scar: #f7e252;
+            --decoration-cube: #ffb000;
+            --decoration-book: #a5682a;
+            --decoration-wand: #ffffff;
+        }
+
+        body.light-theme {
+            /* --- Light Mode --- */
+            --background-color: #e0f7fa;
+            --bezel-color-dark: #c0c0c0;
+            --bezel-color-light: #f5f5dc;
+            --stand-color: #d2b48c;
+            --text-color: #004d40;
+            --header-color: #d9534f;
+            --accent-color: #0275d8;
+            --border-color: #a9a9a9;
+            --window-bg: #ffffff;
+            --nebula-1: rgba(0, 150, 255, 0.1);
+            --nebula-2: rgba(255, 100, 100, 0.1);
+            --planet-1: rgba(224, 108, 80, 0.5);
+            --planet-2: rgba(216, 202, 184, 0.5);
+            --planet-3: rgba(243, 219, 163, 0.4);
+            --stars: #000033;
+
+            --decoration-guitar: #8b5a2b;
+            --decoration-snitch: #e6b400;
+            --decoration-scar: #d9534f;
+            --decoration-cube: #d9534f;
+            --decoration-book: #654321;
+            --decoration-wand: #333333;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            font-size: 22px;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            background-image:
+                radial-gradient(circle at 20% 50%, var(--planet-1) 50px, transparent 51px),
+                radial-gradient(circle at 80% 70%, var(--planet-2) 80px, transparent 81px),
+                radial-gradient(circle at 50% 90%, var(--planet-3) 60px, transparent 61px),
+                radial-gradient(ellipse at 70% 20%, var(--nebula-1) 0%, transparent 50%),
+                radial-gradient(ellipse at 30% 80%, var(--nebula-2) 0%, transparent 50%),
+                radial-gradient(var(--stars) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50px 50px;
+            background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Center the whole assembly */
+            min-height: 100vh;
+            padding: 2rem;
+            box-sizing: border-box;
+            overflow: hidden; /* Prevent scrolling */
+            transition: background-color 0.5s ease;
+        }
+        
+        /* --- Intro Screen --- */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--background-color);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: opacity 0.5s ease-out, background-color 0.5s ease;
+        }
+        #intro-screen h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 3rem;
+            color: var(--header-color);
+            text-shadow: 0 0 10px var(--header-color);
+        }
+        #intro-screen h2 {
+            font-family: 'VT323', monospace;
+            font-size: 2rem;
+            color: var(--text-color);
+            margin-top: 0;
+        }
+        #start-button {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.5rem;
+            color: var(--window-bg);
+            background-color: var(--text-color);
+            border: 4px solid var(--border-color);
+            padding: 1rem 2rem;
+            margin-top: 2rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        #start-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--text-color);
+        }
+
+        .monitor-assembly {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .monitor-bezel {
+            background: linear-gradient(145deg, var(--bezel-color-light), var(--bezel-color-dark));
+            padding: 25px; /* Reduced padding */
+            border-radius: 20px;
+            box-shadow: inset 0 0 15px #000, 0 10px 20px rgba(0,0,0,0.5), 0 0 0 5px #111;
+            position: relative;
+            transition: background 0.5s ease;
+        }
+
+        #theme-toggle {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            border-radius: 50%;
+            background-color: rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            z-index: 100;
+        }
+        #theme-toggle .moon { display: block; }
+        #theme-toggle .sun { display: none; }
+        .light-theme #theme-toggle .moon { display: none; }
+        .light-theme #theme-toggle .sun { display: block; }
+
+
+        .container {
+            width: 900px;  /* Reduced size */
+            height: 500px; /* Reduced size */
+            background-color: var(--window-bg);
+            border: 5px solid #111;
+            box-shadow: inset 0 0 25px rgba(0, 255, 127, 0.2);
+            position: relative;
+            border-radius: 5px;
+            transition: background-color 0.5s ease;
+        }
+        .light-theme .container {
+             box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        #game-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: relative;
+            z-index: 5;
+        }
+
+        .game-instructions {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--header-color);
+            text-shadow: 0 0 5px var(--header-color);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .monitor-stand {
+            width: 250px;
+            height: 40px;
+            background-color: var(--stand-color);
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            transition: background-color 0.5s ease;
+            position: relative;
+            top: -5px; /* slight overlap */
+            z-index: -1;
+        }
+
+        /* --- New Game Console --- */
+        .game-console {
+            width: 450px;
+            height: 80px;
+            background: linear-gradient(180deg, var(--bezel-color-light), var(--bezel-color-dark));
+            border-radius: 10px;
+            position: relative;
+            top: -10px; /* Overlap the stand */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-sizing: border-box;
+        }
+        .game-console::before { /* Cartridge slot */
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 15px;
+            background: #111;
+            border-radius: 3px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .console-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        .console-button {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+        }
+        .light-theme .console-button {
+            background-color: var(--header-color);
+        }
+        .d-pad {
+            width: 50px;
+            height: 50px;
+            position: relative;
+        }
+        .d-pad::before, .d-pad::after {
+            content: '';
+            position: absolute;
+            background-color: #444;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+        }
+        .d-pad::before { /* Vertical */
+            left: 50%;
+            top: 0;
+            width: 16px;
+            height: 100%;
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+        .d-pad::after { /* Horizontal */
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 16px;
+            transform: translateY(-50%);
+            border-radius: 3px;
+        }
+
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.4s ease-out;
+        }
+        .modal-overlay.visible {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            background-color: var(--window-bg);
+            border: 4px solid var(--border-color);
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            color: var(--text-color);
+            box-shadow: 0 0 20px rgba(0, 255, 127, 0.5);
+            transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+        }
+        .light-theme .modal-content {
+             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        @keyframes open-from-terminal {
+            from {
+                transform: translate(calc(var(--start-x, 50vw) - 50vw), calc(var(--start-y, 50vh) - 50vh)) scale(0.1);
+                opacity: 0.1;
+            }
+            to {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-overlay.visible .modal-content {
+             animation: open-from-terminal 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+        .modal-overlay.closing .modal-content {
+             animation: open-from-terminal 0.3s cubic-bezier(0.5, 0, 0.75, 0) forwards reverse;
+        }
+        
+        .modal-content h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.5rem;
+            margin-top: 0;
+            border-bottom: 2px solid;
+            padding-bottom: 0.5rem;
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: var(--text-color);
+            cursor: pointer;
+            font-family: 'Press Start 2P', cursive;
+        }
+        .modal-close:hover {
+            color: var(--accent-color);
+        }
+        
+        .modal-content::-webkit-scrollbar {
+            width: 12px;
+        }
+        .modal-content::-webkit-scrollbar-track {
+            background: var(--border-color);
+        }
+        .modal-content::-webkit-scrollbar-thumb {
+            background-color: var(--header-color);
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+        }
+
+        .content-source {
+            display: none;
+        }
+
+        h3 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        .project h3, .education-item h3 {
+             color: var(--header-color);
+        }
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--accent-color);
+            transition: all 0.2s ease-in-out;
+            font-weight: bold;
+        }
+        a:hover {
+            background-color: var(--accent-color);
+            color: var(--window-bg);
+        }
+        
+         .about-me-container {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        .bio-text {
+            flex: 2;
+        }
+        .bio-image {
+            flex: 1;
+        }
+        .bio-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            border: 3px solid var(--border-color);
+        }
+        .project, .education-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px dashed var(--border-color);
+        }
+        .project:last-child, .education-item:last-child {
+            border-bottom: none;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .skills-container h3 {
+             color: var(--header-color);
+             border-bottom: 2px solid var(--border-color);
+             padding-bottom: 0.5rem;
+             margin-bottom: 1rem;
+        }
+        .skills-container ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .skills-container li::before {
+            content: '>';
+            color: var(--accent-color);
+            margin-right: 10px;
+        }
+
+        .cosmic-object {
+            position: fixed;
+            z-index: -1;
+            opacity: 0.8;
+        }
+
+        .ufo {
+            animation: fly-by 20s linear infinite;
+        }
+        .planetoid {
+            animation: drift-by 80s linear infinite;
+        }
+
+        @keyframes fly-by {
+            from { transform: translateX(-150px); }
+            to { transform: translateX(100vw); }
+        }
+        @keyframes drift-by {
+            from { transform: translate(-200px, -5vh); }
+            to { transform: translate(110vw, 5vh); }
+        }
+    </style>
+</head>
+<body>
+    <div id="intro-screen">
+        <h1>[Your Name Here]</h1>
+        <h2>Interactive Portfolio</h2>
+        <button id="start-button">Start Game</button>
+    </div>
+
+    <!-- More cosmic objects -->
+    <div class="cosmic-object ufo" style="top: 15%; font-size: 60px; animation-duration: 25s;">🛸</div>
+    <div class="cosmic-object ufo" style="top: 60%; font-size: 35px; animation-duration: 18s; animation-delay: 5s;">👽</div>
+    <div class="cosmic-object ufo" style="top: 80%; font-size: 45px; animation-duration: 30s; animation-delay: 10s;">👾</div>
+    <div class="cosmic-object ufo" style="top: 30%; font-size: 25px; animation-duration: 15s; animation-delay: 15s;">☄️</div>
+    <div class="cosmic-object planetoid" style="top: 20%; left: 5%; font-size: 100px; animation-duration: 90s;">🪐</div>
+    <div class="cosmic-object planetoid" style="top: 70%; left: -10%; font-size: 120px; animation-duration: 120s; animation-delay: 30s;">🌍</div>
+
+    <div class="monitor-assembly">
+        <div class="monitor-bezel">
+            <div id="theme-toggle" title="Toggle Theme">
+                <span class="sun">☀️</span>
+                <span class="moon">🌙</span>
+            </div>
+            <div class="container">
+                <canvas id="game-canvas"></canvas>
+                <div class="game-instructions">Use Arrow Keys to Move | Press 'E' at a terminal</div>
+            </div>
+        </div>
+        <div class="monitor-stand"></div>
+        <div class="game-console">
+            <div class="d-pad"></div>
+            <div class="console-buttons">
+                <div class="console-button"></div>
+                <div class="console-button"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="modal" class="modal-overlay">
+        <div class="modal-content">
+            <span id="modal-close-btn" class="modal-close">X</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Hidden Content Source -->
+    <div id="content-readme" class="content-source">
+        <h2 style="color: var(--color-readme);">README.txt</h2>
+        <p>A motivated Computer Science undergraduate specializing in AI & ML. My core experience lies in architecting and developing robust backend systems with Node.js, FastAPI, and MongoDB. As a tech freak and cybersecurity enthusiast, I am constantly exploring new technologies and security principles to build secure, innovative solutions...</p>
+    </div>
+    <div id="content-education" class="content-source">
+        <h2 style="color: var(--color-education);">EDUCATION.dat</h2>
+        <div class="education-item"><h3>Keshav Memorial Engineering College</h3><p>B.Tech, CS (AI & ML) | CGPA: 8.40</p></div>
+        <div class="education-item"><h3>Sri Chaitanya Junior Kalasala</h3><p>Intermediate | Percentage: 94.3%</p></div>
+        <div class="education-item"><h3>Takshasila Public School</h3><p>School | GPA: 8.2</p></div>
+    </div>
+    <div id="content-projects" class="content-source">
+        <h2 style="color: var(--color-projects);">PROJECTS.bin</h2>
+        <div class="project"><h3>SmartTask AI – LLM-Powered Task Planner</h3><p>Built a full-stack task planner using Ollama, CrewAI, and FastAPI. Integrates with Google Calendar for auto-scheduling.</p><a href="https://github.com/SVK004/Planning_Schedule_CrewAI_Langchain" target="_blank">[View Source Code]</a></div>
+        <div class="project"><h3>RedactPDF – Agentic AI PDF Redaction Tool</h3><p>Developed an LLM-powered PDF redaction tool using LangChain + CrewAI. Features a FastAPI backend and React interface.</p><a href="https://github.com/SVK004/AgenticAI-pdfRedactor-basic" target="_blank">[View Source Code]</a></div>
+        <div class="project"><h3>Emotion Recognizer – Speech-Based ML App</h3><p>Classified emotions from speech using MFCC and NLP features. Built a REST API in Flask and integrated it with a React frontend.</p><a href="https://github.com/SVK004/Emotion-Recognizer" target="_blank">[View Source Code]</a></div>
+        <div class="project"><h3>Word Matching Game</h3><p>Developed an accessible word game for dyslexic/autistic learners using React and Pixi.js. Deployed via Vercel.</p><a href="https://word-matching-new.vercel.app/word-matching" target="_blank">[View Website]</a></div>
+        <div class="project"><h3>Nyaay Sahaayak (Legal assistant)</h3><p>Developed a user-friendly legal advisory platform using a regex-based query strategy to interpret user input.</p><a href="https://github.com/SVK004/NyaaySahaayak" target="_blank">[View Source Code]</a></div>
+    </div>
+    <div id="content-skills" class="content-source">
+        <h2 style="color: var(--color-skills);">SKILLS.sys</h2>
+        <div class="skills-container">
+            <div class="skill-category">
+                <h3>Languages</h3>
+                <ul>
+                    <li>Java</li>
+                    <li>C++ & C</li>
+                    <li>Python</li>
+                    <li>JavaScript</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>Web Technologies</h3>
+                <ul>
+                    <li>React</li>
+                    <li>Node.js</li>
+                    <li>Express.js</li>
+                    <li>HTML & CSS</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>Databases</h3>
+                <ul>
+                    <li>MySQL</li>
+                    <li>MongoDB</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>Cloud & Tools</h3>
+                <ul>
+                    <li>AWS (S3, EC2 basics)</li>
+                    <li>Git & GitHub</li>
+                    <li>Docker</li>
+                    <li>Postman</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>Concepts</h3>
+                <ul>
+                    <li>Data Structures & Algorithms</li>
+                    <li>Problem Solving</li>
+                    <li>System Design</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="content-about" class="content-source">
+        <h2 style="color: var(--color-name);">[Your Name Here]</h2>
+        <div class="about-me-container">
+            <div class="bio-text">
+                <p>This is a short bio about the user. Here you can write about your passions, your professional journey, and what drives you. Mention your hobbies like sci-fi books, speedcubing, and playing the guitar. Let your personality shine through in this retro-futuristic space!</p>
+            </div>
+            <div class="bio-image">
+                <img src="https://placehold.co/250x250/0a141e/ffffff?text=Avatar" alt="User Avatar">
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('game-canvas');
+            const ctx = canvas.getContext('2d');
+            const container = document.querySelector('.container');
+
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+
+            let rootStyles = getComputedStyle(document.documentElement);
+            let brightTextColor, playerColor;
+            
+            function updateThemeColors() {
+                rootStyles = getComputedStyle(document.documentElement);
+                brightTextColor = rootStyles.getPropertyValue('--text-color').trim();
+                playerColor = document.body.classList.contains('light-theme') ? '#d9534f' : '#00ff7f';
+                
+                terminals.forEach(t => {
+                    t.color = rootStyles.getPropertyValue(t.colorVar).trim();
+                });
+                
+                decorations.forEach(d => {
+                    if (d.colorVar) d.color = rootStyles.getPropertyValue(d.colorVar).trim();
+                });
+            }
+
+            // --- Game State ---
+            const player = { x: canvas.width / 2, y: canvas.height / 2 + 60, width: 20, height: 30, speed: 4 };
+            const keys = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false };
+            let activeTerminal = null;
+            let openModalContentId = null;
+            let lastOpenedTerminal = null;
+
+            const terminals = [
+                { x: 100, y: 100, width: 80, height: 50, colorVar: '--color-readme', name: 'README.txt', contentId: 'content-readme' },
+                { x: canvas.width - 180, y: 100, width: 80, height: 50, colorVar: '--color-education', name: 'EDUCATION', contentId: 'content-education' },
+                { x: 100, y: canvas.height - 150, width: 80, height: 50, colorVar: '--color-projects', name: 'PROJECTS', contentId: 'content-projects' },
+                { x: canvas.width - 180, y: canvas.height - 150, width: 80, height: 50, colorVar: '--color-skills', name: 'SKILLS', contentId: 'content-skills' },
+                { x: canvas.width / 2, y: 40, width: 350, height: 40, colorVar: '--color-name', name: '[Your Name Here]', contentId: 'content-about', isName: true }
+            ];
+
+            // --- Decorative Elements ---
+             const decorations = [
+                { type: 'text', text: '🎸', x: 60, y: canvas.height - 60, size: 40, colorVar: '--decoration-guitar' },
+                { type: 'text', text: '~o~', x: canvas.width - 150, y: 200, size: 25, colorVar: '--decoration-snitch' },
+                { type: 'text', text: 'ϟ', x: canvas.width - 80, y: canvas.height - 50, size: 40, colorVar: '--decoration-scar' },
+                { type: 'text', text: '▨', x: 300, y: 70, size: 40, colorVar: '--decoration-cube' },
+                { type: 'text', text: '📖', x: 200, y: canvas.height - 50, size: 40, colorVar: '--decoration-book' },
+                { type: 'text', text: '🪄', x: canvas.width - 100, y: 280, size: 40, colorVar: '--decoration-wand' },
+                { type: 'text', text: '🪄', x: 100, y: 200, size: 40, colorVar: '--decoration-wand' },
+                { type: 'pacman', x: 600, y: 80, radius: 20 }
+            ];
+
+            // --- Flickering Title State ---
+            const titles = ['Backend Developer', 'Cybersecurity Enthusiast', 'AI & ML Specialist', 'Tech Freak'];
+            let titleIndex = 0, charIndex = 0, isDeleting = false, currentTitleText = '', lastTypeTime = 0, typeSpeed = 150;
+            
+            // --- Modal Handling ---
+            const modal = document.getElementById('modal');
+            const modalBody = document.getElementById('modal-body');
+            const modalContent = modal.querySelector('.modal-content');
+            const closeModalBtn = document.getElementById('modal-close-btn');
+
+            function closeModal(callback) {
+                if (!openModalContentId || modal.classList.contains('closing')) {
+                    if (callback) callback();
+                    return;
+                }
+
+                modal.classList.add('closing');
+                modal.classList.remove('visible');
+                
+                function onAnimationEnd() {
+                    modal.classList.remove('closing');
+                    modal.style.display = 'none';
+                    modalBody.innerHTML = '';
+                    openModalContentId = null;
+                    modalContent.removeEventListener('animationend', onAnimationEnd);
+                    if (callback) callback();
+                }
+                modalContent.addEventListener('animationend', onAnimationEnd, { once: true });
+            }
+
+            function openModal(terminal) {
+                const contentId = terminal.contentId;
+                if (openModalContentId === contentId && modal.classList.contains('visible')) return;
+
+                function performOpen() {
+                    lastOpenedTerminal = terminal;
+                    const canvasRect = canvas.getBoundingClientRect();
+                    const startX = canvasRect.left + (terminal.isName ? terminal.x : terminal.x + terminal.width / 2);
+                    const startY = canvasRect.top + (terminal.isName ? terminal.y : terminal.y + terminal.height / 2);
+                    
+                    modal.style.setProperty('--start-x', `${startX}px`);
+                    modal.style.setProperty('--start-y', `${startY}px`);
+                    
+                    const content = document.getElementById(contentId).innerHTML;
+                    modalBody.innerHTML = content;
+                    modal.style.display = 'flex';
+                    modal.classList.remove('closing');
+                    modal.classList.add('visible');
+                    openModalContentId = contentId;
+                }
+
+                if (openModalContentId) {
+                    closeModal(performOpen);
+                } else {
+                    performOpen();
+                }
+            }
+            
+            closeModalBtn.addEventListener('click', () => closeModal());
+
+            // --- Theme Toggle Logic ---
+            const themeToggle = document.getElementById('theme-toggle');
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('light-theme');
+                updateThemeColors();
+            });
+            
+            // --- Game Loop ---
+            function update(timestamp) {
+                if (keys.ArrowUp && player.y > 0) player.y -= player.speed;
+                if (keys.ArrowDown && player.y < canvas.height - player.height) player.y += player.speed;
+                if (keys.ArrowLeft && player.x > 0) player.x -= player.speed;
+                if (keys.ArrowRight && player.x < canvas.width - player.width) player.x += player.speed;
+
+                let closestTerminal = null;
+                let minDistance = Infinity;
+
+                terminals.forEach(terminal => {
+                    const playerCenterX = player.x + player.width / 2;
+                    const playerCenterY = player.y + player.height / 2;
+                    let distance;
+
+                    if (terminal.isName) {
+                        const dx = Math.max(Math.abs(playerCenterX - terminal.x) - terminal.width / 2, 0);
+                        const dy = Math.max(Math.abs(playerCenterY - terminal.y) - terminal.height / 2, 0);
+                        distance = Math.sqrt(dx * dx + dy * dy);
+                    } else {
+                        const termCenterX = terminal.x + terminal.width / 2;
+                        const termCenterY = terminal.y + terminal.height / 2;
+                        distance = Math.hypot(playerCenterX - termCenterX, playerCenterY - termCenterY);
+                    }
+
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestTerminal = terminal;
+                    }
+                });
+                
+                activeTerminal = (closestTerminal && minDistance < 80) ? closestTerminal : null;
+
+                if (openModalContentId && (!activeTerminal || activeTerminal.contentId !== openModalContentId)) {
+                    closeModal();
+                }
+
+                if (timestamp - lastTypeTime > typeSpeed) {
+                    lastTypeTime = timestamp;
+                    const currentTitle = titles[titleIndex];
+                    if (isDeleting) {
+                        charIndex--;
+                        if (charIndex === 0) { isDeleting = false; titleIndex = (titleIndex + 1) % titles.length; typeSpeed = 500; } else { typeSpeed = 80; }
+                    } else {
+                        charIndex++;
+                        if (charIndex === currentTitle.length) { isDeleting = true; typeSpeed = 2000; } else { typeSpeed = 120; }
+                    }
+                    currentTitleText = currentTitle.substring(0, charIndex);
+                }
+            }
+            
+            let pacmanMouth = 0;
+            let mouthOpening = true;
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                 decorations.forEach(d => {
+                    if (d.type === 'text') {
+                        ctx.font = `${d.size}px 'Press Start 2P'`;
+                        ctx.fillStyle = d.color;
+                        ctx.globalAlpha = 0.6;
+                        ctx.shadowColor = d.color;
+                        ctx.shadowBlur = 10;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(d.text, d.x, d.y);
+                    } else if (d.type === 'pacman') {
+                         if (mouthOpening) {
+                            pacmanMouth += 0.02;
+                            if (pacmanMouth >= 0.4) mouthOpening = false;
+                        } else {
+                            pacmanMouth -= 0.02;
+                            if (pacmanMouth <= 0) mouthOpening = true;
+                        }
+                        ctx.beginPath();
+                        ctx.arc(d.x, d.y, d.radius, pacmanMouth * Math.PI, (2 - pacmanMouth) * Math.PI);
+                        ctx.lineTo(d.x, d.y);
+                        ctx.closePath();
+                        ctx.fillStyle = '#f7e252';
+                        ctx.fill();
+                    }
+                });
+                ctx.globalAlpha = 1.0;
+                ctx.shadowBlur = 0;
+
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                ctx.fillStyle = brightTextColor;
+                ctx.font = "18px 'Press Start 2P'";
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.shadowColor = brightTextColor;
+                ctx.shadowBlur = 10;
+                ctx.fillText(currentTitleText + (isDeleting ? '' : '_'), centerX, centerY);
+                ctx.shadowBlur = 0;
+
+                terminals.forEach(t => {
+                    ctx.fillStyle = t.color;
+                    ctx.shadowColor = t.color;
+                    ctx.shadowBlur = (activeTerminal === t) ? 25 : 15;
+                    
+                    if (t.isName) {
+                        ctx.font = "24px 'Press Start 2P'";
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(t.name, t.x, t.y);
+                    } else {
+                        ctx.fillRect(t.x, t.y, t.width, t.height);
+                        ctx.font = "12px 'Press Start 2P'";
+                        ctx.textAlign = 'center';
+                        ctx.fillText(t.name, t.x + t.width / 2, t.y - 15);
+                    }
+                });
+                ctx.shadowBlur = 0;
+                
+                player.color = playerColor;
+                ctx.fillStyle = player.color;
+                ctx.fillRect(player.x, player.y, player.width, player.height);
+                
+                if (activeTerminal) {
+                    ctx.fillStyle = activeTerminal.color;
+                    ctx.font = "14px 'Press Start 2P'";
+                    ctx.textAlign = 'center';
+                    ctx.shadowColor = activeTerminal.color;
+                    ctx.shadowBlur = 10;
+                    ctx.fillText("[Press 'E']", player.x + player.width / 2, player.y - 20);
+                    ctx.shadowBlur = 0;
+                }
+            }
+            
+            let gameStarted = false;
+
+            function gameLoop(timestamp) {
+                if (!gameStarted) return;
+                update(timestamp);
+                draw();
+                requestAnimationFrame(gameLoop);
+            }
+
+            const introScreen = document.getElementById('intro-screen');
+            const startButton = document.getElementById('start-button');
+            startButton.addEventListener('click', () => {
+                introScreen.style.opacity = '0';
+                setTimeout(() => {
+                    introScreen.style.display = 'none';
+                }, 500);
+                gameStarted = true;
+                requestAnimationFrame(gameLoop);
+            });
+
+            window.addEventListener('keydown', e => {
+                if (!gameStarted) return;
+                if (e.key === 'Escape' && modal.classList.contains('visible')) { closeModal(); }
+                if (keys.hasOwnProperty(e.key)) { e.preventDefault(); keys[e.key] = true; }
+                if (e.key.toLowerCase() === 'e' && activeTerminal) { openModal(activeTerminal); }
+            });
+            window.addEventListener('keyup', e => {
+                if (keys.hasOwnProperty(e.key)) { e.preventDefault(); keys[e.key] = false; }
+            });
+
+            updateThemeColors();
+        });
+    </script>
+</body>
+</html>
+
