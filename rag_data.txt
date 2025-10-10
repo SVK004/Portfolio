@@ -1,0 +1,14 @@
+About Me: A motivated Computer Science undergraduate specializing in AI & ML. My core experience lies in architecting and developing robust backend systems with Node.js, FastAPI, and MongoDB. As a tech freak and cybersecurity enthusiast, I am constantly exploring new technologies and security principles to build secure, innovative solutions. My project portfolio demonstrates a strong capability in integrating cutting-edge technologies like Large Language Models (LLMs) to build practical, real-world tools. I am passionate about system design and eager to contribute my skills to a challenging development role.
+Education at Keshav Memorial Engineering College: B.Tech in Computer Science (AI & ML), expected graduation March 2026, CGPA 8.40.
+Education at Sri Chaitanya Junior Kalasala: Intermediate, completed March 2022, Percentage 94.3%.
+Education at Takshasila Public School: Schooling, completed March 2020, GPA 8.2.
+Project SmartTask AI: An LLM-Powered Task Planner. It was a full-stack task planner using Ollama, CrewAI, and FastAPI. It integrates with Google Calendar for auto-scheduling.
+Project RedactPDF: An Agentic AI PDF Redaction Tool. It was developed with LangChain and CrewAI. It features a FastAPI backend and a React interface.
+Project Emotion Recognizer: A Speech-Based ML App. It classified emotions from speech using MFCC and NLP features. It had a REST API in Flask and a React frontend.
+Project Word Matching Game: Developed an accessible word game for dyslexic and autistic learners using React and Pixi.js. Deployed via Vercel.
+Project Nyaay Sahaayak: A user-friendly legal advisory platform using a regex-based query strategy to interpret user input.
+Skills in Programming Languages: Java, C++, C, Python, JavaScript.
+Skills in Web Technologies: React, Node.js, Express.js, HTML, CSS.
+Skills in Databases: MySQL, MongoDB.
+Skills in Cloud & Tools: AWS basics (S3, EC2), Git, GitHub, Docker, Postman.
+Skills in Concepts: Data Structures & Algorithms, Problem Solving, System Design.
