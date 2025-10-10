@@ -21,19 +21,16 @@ app.add_middleware(
 # Load environment variables
 load_dotenv()
 
-# --- Load RAG data from a separate file ---
+# --- Load RAG data from a separate file (Simplified for root directory) ---
 def load_rag_data(file_name="rag_data.txt"):
     """Reads content from a data file located in the project root."""
-    script_dir = os.path.dirname(__file__)
-    project_root = os.path.abspath(os.path.join(script_dir, '..'))
-    file_path = os.path.join(project_root, file_name)
-
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
-            print(f"Successfully loaded data from: {file_path}")
+        # Since main.py and rag_data.txt are in the same root folder, we can open it directly.
+        with open(file_name, "r", encoding="utf-8") as f:
+            print(f"Successfully loaded data from: {file_name}")
             return f.read()
     except FileNotFoundError:
-        print(f"CRITICAL ERROR: Could not find the data file at {file_path}. Make sure 'rag_data.txt' is in your project's root directory.")
+        print(f"CRITICAL ERROR: Could not find the data file '{file_name}'. Make sure it's in the project's root directory.")
         return ""
 
 RAG_DATA_SOURCE = load_rag_data()
