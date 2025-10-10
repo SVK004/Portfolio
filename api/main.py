@@ -5,6 +5,7 @@ import google.generativeai as genai
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from fastapi.middleware.cors import CORSMiddleware
+from mangum import Mangum
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -111,3 +112,5 @@ QUESTION:
     except Exception as e:
         print(f"RAG Backend Error: {e}")
         raise HTTPException(status_code=500, detail="An internal error occurred while processing the request.")
+
+handler = Mangum(app)
