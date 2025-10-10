@@ -13,7 +13,7 @@
         /* * Retro 8-Bit Interactive Portfolio Stylesheet
          * Engineer: A UI/UX Expert
          * Date: 2025-09-21
-         * Version: 12.1 -- Game Loop Bugfix
+         * Version: 12.2 -- Chat Input Bugfix
          */
 
         :root {
@@ -535,14 +535,12 @@
             const themeToggle = document.getElementById('theme-toggle');
             
             // --- GAME & UI ELEMENTS INITIALIZATION ---
-            // This is the array that defines all interactive elements on the canvas.
             const terminals = [
                 { x: 100, y: 100, width: 80, height: 50, colorVar: '--color-readme', name: 'README.txt', contentId: 'content-readme' },
                 { x: canvas.width - 180, y: 100, width: 80, height: 50, colorVar: '--color-education', name: 'EDUCATION', contentId: 'content-education' },
                 { x: 100, y: canvas.height - 150, width: 80, height: 50, colorVar: '--color-projects', name: 'PROJECTS', contentId: 'content-projects' },
                 { x: canvas.width - 180, y: canvas.height - 150, width: 80, height: 50, colorVar: '--color-skills', name: 'SKILLS', contentId: 'content-skills' },
                 { x: canvas.width / 2 - 120, y: 40, width: 350, height: 40, colorVar: '--color-name', name: '[Your Name Here]', contentId: 'content-about', isName: true },
-                // --- THIS IS THE LINE I CHANGED ---
                 { x: canvas.width / 2 + 150, y: 45, width: 180, height: 40, colorVar: '--color-chat', name: '[Chat]', contentId: 'chat', isChat: true, isName: true, fontSize: '16px' }
             ];
             const decorations = [
@@ -855,7 +853,10 @@
                      if (chatModal.classList.contains('visible')) closeChat();
                 }
                 if (keys.hasOwnProperty(e.key)) { e.preventDefault(); keys[e.key] = true; }
-                if (e.key.toLowerCase() === 'e' && activeTerminal) { openModal(activeTerminal); }
+                if (e.key.toLowerCase() === 'e' && activeTerminal) {
+                    e.preventDefault(); // <-- THIS IS THE FIX
+                    openModal(activeTerminal);
+                }
             });
             window.addEventListener('keyup', e => {
                 if (keys.hasOwnProperty(e.key)) { e.preventDefault(); keys[e.key] = false; }
