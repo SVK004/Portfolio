@@ -67,22 +67,41 @@ def chat_endpoint(query: Query):
         raise HTTPException(status_code=503, detail="Knowledge base is empty. Check if rag_data.txt was loaded correctly.")
 
     try:
-        # A small list of common English words to ignore
-        stop_words = set([
-            "a", "an", "the", "in", "on", "of", "what", "is", "who", "where", "when", 
-            "tell", "me", "about", "for", "this", "that", "with", "by", "has"
-        ])
-
-        # Simple keyword-based retrieval (lightweight and effective)
         user_query_lower = user_query.lower()
-        meaningful_words = [word for word in user_query_lower.split() if word not in stop_words]
-        
-        ranked_chunks = sorted(
-            knowledge_chunks,
-            key=lambda chunk: sum((word in chunk.lower() or (word.endswith('s') and word[:-1] in chunk.lower())) for word in meaningful_words),
-            reverse=True
-        )
-        context = "\n".join(ranked_chunks[:3]) # Use the top 3 most relevant chunks
+        context = ""
+        found_category = False
+
+        # 1. Define categories and their keywords/file prefixes
+        category_map = {
+            'Project:': ('project', 'projects', 'work', 'built', 'develop'),
+            'Skills in': ('skill', 'skills', 'knows', 'proficient', 'technologies'),
+            'Education:': ('education', 'school', 'college', 'degree', 'study'),
+            'Work Experience:': ('experience', 'intern', 'internship', 'job'),
+            'Internship Task:': ('task', 'tasks', 'duties', 'responsibilities')
+        }
+
+        # 2. Check if the user is asking for a specific category
+        for prefix, keywords in category_map.items():
+            if any(keyword in user_query_lower for keyword in keywords):
+                # If a category keyword is found, gather ALL matching lines
+                matching_chunks = [chunk for chunk in knowledge_chunks if chunk.strip().startswith(prefix)]
+                if matching_chunks:
+                    context = "\n".join(matching_chunks)
+                    found_category = True
+                    break # Stop after finding the first relevant category
+
+        # 3. If no specific category was found, fall back to the general keyword search
+        if not found_category:
+            stop_words = set(["a", "an", "the", "in", "on", "of", "what", "is", "who", "where", "when", "tell", "me", "about", "for", "this", "that", "with", "by", "has"])
+            meaningful_words = [word for word in user_query_lower.split() if word not in stop_words]
+            
+            ranked_chunks = sorted(
+                knowledge_chunks,
+                key=lambda chunk: sum((word in chunk.lower() or (word.endswith('s') and word[:-1] in chunk.lower())) for word in meaningful_words),
+                reverse=True
+            )
+            # Use a larger context window for general questions
+            context = "\n".join(ranked_chunks[:5])
 
         prompt = f"""Based ONLY on the following information, answer the user's question concisely.
 If the information required to answer the question is not in the context, say that you do not have enough information to answer.
