@@ -79,7 +79,7 @@ def chat_endpoint(query: Query):
         
         ranked_chunks = sorted(
             knowledge_chunks,
-            key=lambda chunk: sum(word in chunk.lower() for word in meaningful_words),
+            key=lambda chunk: sum((word in chunk.lower() or (word.endswith('s') and word[:-1] in chunk.lower())) for word in meaningful_words),
             reverse=True
         )
         context = "\n".join(ranked_chunks[:3]) # Use the top 3 most relevant chunks
