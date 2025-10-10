@@ -7,7 +7,7 @@
     ],
     "routes": [
         {
-            "src": "/backend/(.*)",
+            "src": "/src/(.*)",
             "dest": "/backend/index.py"
         }
     ]
