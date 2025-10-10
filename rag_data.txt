@@ -1,72 +1,26 @@
-{
-  "personal_info": {
-    "name": "K Sai Venkat Krishna",
-    "email": "saivenkatkrishna2004@gmail.com",
-    "linkedin": "https://www.linkedin.com/in/sai-venkat-krishna-kalvacherla-a0a4b2272/",
-    "portfolio": "https://portfolio-eight-sepia-72.vercel.app/"
-    "github": "https://github.com/SVK004"
-  },
-  "about_me": "A motivated Computer Science undergraduate specializing in AI & ML. My core experience lies in architecting and developing robust backend systems with Node.js, FastAPI, and MongoDB. As a tech freak and cybersecurity enthusiast, I am constantly exploring new technologies and security principles to build secure, innovative solutions. My project portfolio demonstrates a strong capability in integrating cutting-edge technologies like Large Language Models (LLMs) to build practical, real-world tools. I am passionate about system design and eager to contribute my skills to a challenging development role.",
-  "education": [
-    {
-      "institution": "Keshav Memorial Engineering College",
-      "degree": "B.Tech in Computer Science (AI & ML)",
-      "graduation": "Expected March 2026",
-      "cgpa": 8.40
-    },
-    {
-      "institution": "Sri Chaitanya Junior Kalasala",
-      "degree": "Intermediate",
-      "graduation": "March 2022",
-      "percentage": 94.3
-    },
-    {
-      "institution": "Takshasila Public School",
-      "degree": "Schooling",
-      "graduation": "March 2020",
-      "gpa": 8.2
-    }
-  ],
-  "experience": [
-    {
-      "company": "Armour AI",
-      "role": "Cybersecurity Intern",
-      "duration": "August - Present",
-      "tasks": [
-        "Developing phishing simulation tools and fish tag applications.",
-        "Building a cybersecurity compliance website by linking multiple external APIs.",
-        "Implementing security best practices and automation for monitoring and compliance.",
-        "Collaborating with the team to design and improve backend systems for cybersecurity projects."
-      ]
-    }
-  ],
-  "projects": [
-    {
-      "name": "SmartTask AI",
-      "description": "An LLM-Powered Task Planner. It was a full-stack task planner using Ollama, CrewAI, and FastAPI. Integrates with Google Calendar for auto-scheduling."
-    },
-    {
-      "name": "RedactPDF",
-      "description": "An Agentic AI PDF Redaction Tool developed with LangChain and CrewAI. Features a FastAPI backend and a React interface."
-    },
-    {
-      "name": "Emotion Recognizer",
-      "description": "A Speech-Based ML App that classifies emotions from speech using MFCC and NLP features. It has a REST API in Flask and a React frontend."
-    },
-    {
-      "name": "Word Matching Game",
-      "description": "Developed an accessible word game for dyslexic and autistic learners using React and Pixi.js. Deployed via Vercel."
-    },
-    {
-      "name": "Nyaay Sahaayak",
-      "description": "A user-friendly legal advisory platform using a regex-based query strategy to interpret user input."
-    }
-  ],
-  "skills": {
-    "programming_languages": ["Java", "C++", "C", "Python", "JavaScript"],
-    "web_technologies": ["React", "Node.js", "Express.js", "HTML", "CSS"],
-    "databases": ["MySQL", "MongoDB"],
-    "cloud_tools": ["AWS basics (S3, EC2)", "Git", "GitHub", "Docker", "Postman"],
-    "concepts": ["Data Structures & Algorithms", "Problem Solving", "System Design"]
-  }
-}
+Creator's Name: K Sai Venkat Krishna
+Creator's Email: saivenkatkrishna2004@gmail.com
+Creator's Phone: <Your Phone Number>
+Creator's LinkedIn: https://www.linkedin.com/in/sai-venkat-krishna-kalvacherla-a0a4b2272/
+Creator's Portfolio: https://portfolio-eight-sepia-72.vercel.app/
+Creator's GitHub: https://github.com/SVK004
+
+About the creator: A motivated Computer Science undergraduate specializing in AI & ML. My core experience lies in architecting and developing robust backend systems with Node.js, FastAPI, and MongoDB. As a tech freak and cybersecurity enthusiast, I am constantly exploring new technologies and security principles to build secure, innovative solutions. My project portfolio demonstrates a strong capability in integrating cutting-edge technologies like Large Language Models (LLMs) to build practical, real-world tools. I am passionate about system design and eager to contribute my skills to a challenging development role.
+Education: B.Tech in Computer Science (AI & ML) from Keshav Memorial Engineering College, expected graduation March 2026 with a CGPA of 8.40.
+Education: Intermediate from Sri Chaitanya Junior Kalasala, graduated March 2022 with a percentage of 94.3.
+Education: Schooling from Takshasila Public School, graduated March 2020 with a GPA of 8.2.
+Work Experience: Cybersecurity Intern at Armour AI.
+Internship Task: Developing phishing simulation tools and fish tag applications.
+Internship Task: Building a cybersecurity compliance website by linking multiple external APIs.
+Internship Task: Implementing security best practices and automation for monitoring and compliance.
+Internship Task: Collaborating with the team to design and improve backend systems for cybersecurity projects.
+Project SmartTask AI: An LLM-Powered Task Planner. It was a full-stack task planner using Ollama, CrewAI, and FastAPI. Integrates with Google Calendar for auto-scheduling.
+Project RedactPDF: An Agentic AI PDF Redaction Tool developed with LangChain and CrewAI. Features a FastAPI backend and a React interface.
+Project Emotion Recognizer: A Speech-Based ML App that classifies emotions from speech using MFCC and NLP features. It has a REST API in Flask and a React frontend.
+Project Word Matching Game: Developed an accessible word game for dyslexic and autistic learners using React and Pixi.js. Deployed via Vercel.
+Project Nyaay Sahaayak: A user-friendly legal advisory platform using a regex-based query strategy to interpret user input.
+Skills in Programming Languages: Java, C++, C, Python, JavaScript.
+Skills in Web Technologies: React, Node.js, Express.js, HTML, CSS.
+Skills in Databases: MySQL, MongoDB.
+Skills in Cloud & Tools: AWS basics (S3, EC2), Git, GitHub, Docker, Postman, GCP.
+Skills in Concepts: Data Structures & Algorithms, Problem Solving, System Design.
