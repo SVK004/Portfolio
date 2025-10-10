@@ -3,7 +3,8 @@
   "builds": [
     {
       "src": "api/main.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": { "includeFiles": ["rag_data.txt"] }
     },
     {
       "src": "index.html",
@@ -11,13 +12,7 @@
     }
   ],
   "routes": [
-    {
-      "src": "/api/chat",
-      "dest": "api/main.py"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
+    { "src": "/api/chat", "dest": "api/main.py" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }

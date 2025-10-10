@@ -2,8 +2,6 @@ import os
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import google.generativeai as genai
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
 
@@ -68,6 +66,19 @@ else:
 # Pydantic model for the incoming request body
 class Query(BaseModel):
     userQuery: str
+
+def text_to_vector(text):
+    words = text.lower().split()
+    return Counter(words)
+
+def cosine_sim(v1, v2):
+    intersection = set(v1.keys()) & set(v2.keys())
+    numerator = sum([v1[x] * v2[x] for x in intersection])
+    sum1 = sum([v1[x] ** 2 for x in v1.keys()])
+    sum2 = sum([v2[x] ** 2 for x in v2.keys()])
+    denominator = math.sqrt(sum1) * math.sqrt(sum2)
+    return float(numerator) / denominator if denominator else 0.0
+
 
 # API endpoint for the chat
 @app.post("/api/chat")
