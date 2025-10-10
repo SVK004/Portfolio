@@ -513,7 +513,7 @@
     <div id="content-about" class="content-source">
         <h2 style="color: var(--color-name);">K Sai Venkat Krishna</h2>
         <div class="about-me-container">
-            <div class="bio-text"><p>This is a short bio... Mention your hobbies like sci-fi books, speedcubing, and playing the guitar.</p></div>
+            <div class="bio-text"><p>My fascination with complex systems started with solving a Rubik's cube and has grown into a passion for architecting robust backend services and intelligent AI models. I thrive on the logic of Data Structures and the challenge of System Design, using tools like FastAPI, Node.js, and MongoDB to bring ideas to life. Beyond the terminal, my interests extend from the futuristic worlds of sci-fi to the creative outlet of playing guitar.</p></div>
             <div class="bio-image"><img src="https://placehold.co/250x250/0a141e/ffffff?text=Avatar" alt="User Avatar"></div>
         </div>
     </div>
@@ -540,8 +540,8 @@
                 { x: canvas.width - 180, y: 100, width: 80, height: 50, colorVar: '--color-education', name: 'EDUCATION', contentId: 'content-education' },
                 { x: 100, y: canvas.height - 150, width: 80, height: 50, colorVar: '--color-projects', name: 'PROJECTS', contentId: 'content-projects' },
                 { x: canvas.width - 180, y: canvas.height - 150, width: 80, height: 50, colorVar: '--color-skills', name: 'SKILLS', contentId: 'content-skills' },
-                { x: canvas.width / 2 - 120, y: 40, width: 350, height: 40, colorVar: '--color-name', name: 'K Sai Venkat Krishna', contentId: 'content-about', isName: true },
-                { x: canvas.width / 2 + 150, y: 45, width: 180, height: 40, colorVar: '--color-chat', name: '[Chat]', contentId: 'chat', isChat: true, isName: true, fontSize: '16px' }
+                { x: canvas.width / 2 - 10, y: 40, width: 350, height: 40, colorVar: '--color-name', name: 'K Sai Venkat Krishna', contentId: 'content-about', isName: true },
+                { x: canvas.width / 2 + 310, y: 45, width: 180, height: 40, colorVar: '--color-chat', name: '[Chat]', contentId: 'chat', isChat: true, isName: true, fontSize: '16px' }
             ];
             const decorations = [
                 { type: 'text', text: '🎸', x: 60, y: canvas.height - 60, size: 40, colorVar: '--decoration-guitar' },
@@ -848,6 +848,12 @@
 
             window.addEventListener('keydown', e => {
                 if (!gameStarted) return;
+                if (document.activeElement === chatInput) {
+                    if (e.key === 'Escape') {
+                        closeChat();
+                    }
+                    return;
+                }
                 if (e.key === 'Escape' && (modal.classList.contains('visible') || chatModal.classList.contains('visible'))) {
                      if (modal.classList.contains('visible')) closeModal();
                      if (chatModal.classList.contains('visible')) closeChat();
