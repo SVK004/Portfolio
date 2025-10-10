@@ -1,0 +1,15 @@
+# Environment variables
+# This is the most important line to keep your API key safe!
+.env
+
+# Python virtual environment folder
+venv/
+/venv/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# IDE / Editor specific folders (optional but good practice)
+.vscode/
+.idea/
