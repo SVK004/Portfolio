@@ -73,4 +73,4 @@ QUESTION:
     return {"botResponse": response.text}
 
 # ✅ Export for Vercel Lambda
-handler = Mangum(app)
+# handler = Mangum(app)
