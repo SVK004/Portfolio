@@ -67,11 +67,19 @@ def chat_endpoint(query: Query):
         raise HTTPException(status_code=503, detail="Knowledge base is empty. Check if rag_data.txt was loaded correctly.")
 
     try:
+        # A small list of common English words to ignore
+        stop_words = set([
+            "a", "an", "the", "in", "on", "of", "what", "is", "who", "where", "when", 
+            "tell", "me", "about", "for", "this", "that", "with", "by", "has"
+        ])
+
         # Simple keyword-based retrieval (lightweight and effective)
         user_query_lower = user_query.lower()
+        meaningful_words = [word for word in user_query_lower.split() if word not in stop_words]
+        
         ranked_chunks = sorted(
             knowledge_chunks,
-            key=lambda chunk: sum(word in chunk.lower() for word in user_query_lower.split()),
+            key=lambda chunk: sum(word in chunk.lower() for word in meaningful_words.split()),
             reverse=True
         )
         context = "\n".join(ranked_chunks[:3]) # Use the top 3 most relevant chunks
