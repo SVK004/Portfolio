@@ -55,9 +55,9 @@ else:
 class Query(BaseModel):
     userQuery: str
 
-# API endpoint for the chat
+# API endpoint for the chat - Made synchronous to prevent event loop issues
 @app.post("/api/chat")
-async def chat_endpoint(query: Query):
+def chat_endpoint(query: Query):
     user_query = query.userQuery
     if not model:
         raise HTTPException(status_code=503, detail="Gemini API model is not initialized on the server.")
@@ -85,7 +85,8 @@ CONTEXT:
 QUESTION:
 {user_query}"""
 
-        response = await model.generate_content_async(prompt)
+        # Switched to the synchronous SDK call
+        response = model.generate_content(prompt)
         return {"botResponse": response.text}
     except Exception as e:
         print(f"RAG Backend Error: {e}")
