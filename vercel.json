@@ -1,28 +1,23 @@
 {
-"version": 2,
-"builds": [
-{
-"src": "api/main.py",
-"use": "@vercel/python",
-"config": {
-"includeFiles": [
-"rag_data.txt"
-]
-}
-},
-{
-"src": "index.html",
-"use": "@vercel/static"
-}
-],
-"routes": [
-{
-"src": "/api/(.)",
-"dest": "api/main.py"
-},
-{
-"src": "/(.)",
-"dest": "/index.html"
-}
-]
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/main.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/chat",
+      "dest": "api/main.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
 }
