@@ -29,16 +29,16 @@ def load_rag_data(file_name="rag_data.txt"):
     # Get the directory of the current script (e.g., /.../project/api)
     script_dir = os.path.dirname(__file__)
     # Go up one level to the project root (e.g., /.../project)
-    project_root = os.path.abspath(os.path.join(script_dir, '..'))
+    # project_root = os.path.abspath(os.path.join(script_dir, '..'))
     # Construct the full path to the data file
-    file_path = os.path.join(project_root, file_name)
+    # file_path = os.path.join(project_root, file_name)
 
     try:
-        with open(file_path, "r", encoding="utf-8") as f:
-            print(f"Successfully loaded data from: {file_path}")
+        with open(file_name, "r", encoding="utf-8") as f:
+            print(f"Successfully loaded data from: {file_name}")
             return f.read()
     except FileNotFoundError:
-        print(f"CRITICAL ERROR: Could not find the data file at {file_path}. Make sure 'rag_data.txt' is in your project's root directory.")
+        print(f"CRITICAL ERROR: Could not find the data file at {file_name}. Make sure 'rag_data.txt' is in your project's root directory.")
         return ""
 
 RAG_DATA_SOURCE = load_rag_data()
