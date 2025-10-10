@@ -75,12 +75,25 @@ async def chat_endpoint(query: Query):
     if not knowledge_chunks:
         raise HTTPException(status_code=500, detail="Knowledge base is empty. Check if rag_data.txt is present and not empty.")
     try:
-        corpus = [user_query] + knowledge_chunks
-        vectorizer = TfidfVectorizer()
-        tfidf_matrix = vectorizer.fit_transform(corpus)
-        cosine_similarities = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:]).flatten()
-        top_n_indices = cosine_similarities.argsort()[-3:][::-1]
-        context = "\n".join([knowledge_chunks[i] for i in top_n_indices])
+        query_words = set(re.findall(r'\w+', user_query.lower()))
+
+        # Score each chunk based on the number of matching words
+        scored_chunks = []
+        for i, chunk in enumerate(knowledge_chunks):
+            chunk_words = set(re.findall(r'\w+', chunk.lower()))
+            score = len(query_words.intersection(chunk_words))
+            if score > 0:
+                scored_chunks.append((score, i))
+        
+        # Sort chunks by score in descending order and get the top 3
+        scored_chunks.sort(key=lambda x: x[0], reverse=True)
+        top_n_indices = [index for score, index in scored_chunks[:3]]
+        
+        if not top_n_indices:
+             # Fallback if no words match at all
+            context = RAG_DATA_SOURCE
+        else:
+            context = "\n".join([knowledge_chunks[i] for i in top_n_indices])
         prompt = f"""Based ONLY on the following information, answer the user's question concisely...\n\nCONTEXT:\n{context}\n\nQUESTION:\n{user_query}"""
         response = await model.generate_content_async(prompt)
         return {"botResponse": response.text}
