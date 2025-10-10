@@ -14,7 +14,7 @@
          * Engineer: A UI/UX Expert
          * Date: 2025-09-21
          * Version: 12.1 -- Game Loop Bugfix
-        */
+         */
 
         :root {
             /* --- Dark Mode (Default) --- */
@@ -268,10 +268,10 @@
         }
 
         .modal-overlay.visible .modal-content {
-             animation: open-from-terminal 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+           animation: open-from-terminal 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
         .modal-overlay.closing .modal-content {
-             animation: open-from-terminal 0.3s cubic-bezier(0.5, 0, 0.75, 0) forwards reverse;
+           animation: open-from-terminal 0.3s cubic-bezier(0.5, 0, 0.75, 0) forwards reverse;
         }
         
         .modal-content h2 {
@@ -294,7 +294,7 @@
             color: var(--accent-color);
         }
         .project h3, .education-item h3 {
-             color: var(--header-color);
+           color: var(--header-color);
         }
         .project, .education-item {
             margin-bottom: 1.5rem;
@@ -309,10 +309,10 @@
             gap: 2rem;
         }
         .skills-container h3 {
-             color: var(--header-color);
-             border-bottom: 2px solid var(--border-color);
-             padding-bottom: 0.5rem;
-             margin-bottom: 1rem;
+           color: var(--header-color);
+           border-bottom: 2px solid var(--border-color);
+           padding-bottom: 0.5rem;
+           margin-bottom: 1rem;
         }
         .skills-container ul { list-style: none; padding: 0; }
         .skills-container li::before {
@@ -535,13 +535,15 @@
             const themeToggle = document.getElementById('theme-toggle');
             
             // --- GAME & UI ELEMENTS INITIALIZATION ---
+            // This is the array that defines all interactive elements on the canvas.
             const terminals = [
                 { x: 100, y: 100, width: 80, height: 50, colorVar: '--color-readme', name: 'README.txt', contentId: 'content-readme' },
                 { x: canvas.width - 180, y: 100, width: 80, height: 50, colorVar: '--color-education', name: 'EDUCATION', contentId: 'content-education' },
                 { x: 100, y: canvas.height - 150, width: 80, height: 50, colorVar: '--color-projects', name: 'PROJECTS', contentId: 'content-projects' },
                 { x: canvas.width - 180, y: canvas.height - 150, width: 80, height: 50, colorVar: '--color-skills', name: 'SKILLS', contentId: 'content-skills' },
-                { x: canvas.width / 2, y: 40, width: 350, height: 40, colorVar: '--color-name', name: '[Your Name Here]', contentId: 'content-about', isName: true },
-                { x: canvas.width / 2, y: canvas.height - 40, width: 80, height: 40, colorVar: '--color-chat', name: 'CHAT', contentId: 'chat', isChat: true }
+                { x: canvas.width / 2 - 120, y: 40, width: 350, height: 40, colorVar: '--color-name', name: '[Your Name Here]', contentId: 'content-about', isName: true },
+                // --- THIS IS THE LINE I CHANGED ---
+                { x: canvas.width / 2 + 150, y: 45, width: 180, height: 40, colorVar: '--color-chat', name: '[Chat]', contentId: 'chat', isChat: true, isName: true, fontSize: '16px' }
             ];
             const decorations = [
                 { type: 'text', text: '🎸', x: 60, y: canvas.height - 60, size: 40, colorVar: '--decoration-guitar' },
@@ -809,7 +811,9 @@
                     ctx.shadowBlur = (activeTerminal === t) ? 25 : 15;
                     
                     if (t.isName) {
-                        ctx.font = "24px 'Press Start 2P'";
+                        // Use the terminal's specific font size if it exists, otherwise default to 24px
+                        const fontSize = t.fontSize || '24px';
+                        ctx.font = `${fontSize} 'Press Start 2P'`;
                         ctx.textAlign = 'center';
                         ctx.textBaseline = 'middle';
                         ctx.fillText(t.name, t.x, t.y);
