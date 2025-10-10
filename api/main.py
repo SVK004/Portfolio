@@ -3,11 +3,11 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import google.generativeai as genai
 from fastapi.middleware.cors import CORSMiddleware
-from mangum import Mangum
 
+# Initialize FastAPI app
 app = FastAPI()
 
-# CORS
+# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -16,52 +16,68 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- Load data ---
+# --- ROBUST FILE LOADING FOR VERCEL ---
 def load_rag_data(file_name="rag_data.txt"):
-    script_dir = os.path.dirname(__file__)
+    """Reads content from a data file, designed to work reliably in Vercel."""
+    # The script runs inside the /api directory in Vercel
+    script_dir = os.path.dirname(__file__) 
+    # Go up one level to the project root to find the data file
     project_root = os.path.abspath(os.path.join(script_dir, '..'))
     file_path = os.path.join(project_root, file_name)
-    if os.path.exists(file_name):
-        file_path = file_name
-    elif not os.path.exists(file_path):
-        print(f"ERROR: Missing file at {file_path}")
+
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            print(f"Successfully loaded data from: {file_path}")
+            return f.read()
+    except FileNotFoundError:
+        print(f"CRITICAL ERROR: Could not find the data file at {file_path}. Ensure 'rag_data.txt' is in the root and included in vercel.json.")
         return ""
-    with open(file_path, "r", encoding="utf-8") as f:
-        return f.read()
+# --- END OF FILE LOADING ---
 
 RAG_DATA_SOURCE = load_rag_data()
 knowledge_chunks = [line.strip() for line in RAG_DATA_SOURCE.splitlines() if line.strip()]
 
-# --- Gemini Setup ---
+# --- Gemini API Setup ---
 api_key = os.getenv("GEMINI_API_KEY")
 model = None
 if api_key:
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel("gemini-1.5-flash-latest")
+    try:
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel("gemini-1.5-flash-latest")
+        print("Successfully configured Gemini API.")
+    except Exception as e:
+        print(f"Error configuring Gemini API: {e}")
+else:
+    print("Warning: GEMINI_API_KEY not found in environment variables.")
 
+
+# Pydantic model for the request body
 class Query(BaseModel):
     userQuery: str
 
+# API endpoint for the chat
 @app.post("/api/chat")
 async def chat_endpoint(query: Query):
+    user_query = query.userQuery
     if not model:
-        raise HTTPException(status_code=503, detail="Gemini model not initialized.")
-    if not knowledge_chunks:
-        raise HTTPException(status_code=503, detail="No RAG data loaded.")
-    if not query.userQuery:
+        raise HTTPException(status_code=503, detail="Gemini API model is not initialized on the server.")
+    if not user_query:
         raise HTTPException(status_code=400, detail="Query cannot be empty.")
+    if not knowledge_chunks:
+        raise HTTPException(status_code=503, detail="Knowledge base is empty. Check if rag_data.txt was loaded correctly.")
 
-    # Simple keyword-based retrieval (lightweight)
-    user_query = query.userQuery.lower()
-    ranked_chunks = sorted(
-        knowledge_chunks,
-        key=lambda c: sum(w in c.lower() for w in user_query.split()),
-        reverse=True
-    )
-    context = "\n".join(ranked_chunks[:3])
+    try:
+        # Simple keyword-based retrieval (lightweight and effective)
+        user_query_lower = user_query.lower()
+        ranked_chunks = sorted(
+            knowledge_chunks,
+            key=lambda chunk: sum(word in chunk.lower() for word in user_query_lower.split()),
+            reverse=True
+        )
+        context = "\n".join(ranked_chunks[:3]) # Use the top 3 most relevant chunks
 
-    prompt = f"""Based ONLY on the following information, answer concisely.
-If information is missing, say you don't have enough info.
+        prompt = f"""Based ONLY on the following information, answer the user's question concisely.
+If the information required to answer the question is not in the context, say that you do not have enough information to answer.
 
 CONTEXT:
 {context}
@@ -69,8 +85,11 @@ CONTEXT:
 QUESTION:
 {user_query}"""
 
-    response = await model.generate_content_async(prompt)
-    return {"botResponse": response.text}
+        response = await model.generate_content_async(prompt)
+        return {"botResponse": response.text}
+    except Exception as e:
+        print(f"RAG Backend Error: {e}")
+        raise HTTPException(status_code=500, detail="An internal error occurred while processing the request.")
 
-# ✅ Export for Vercel Lambda
-# handler = Mangum(app)
+# No handler needed! Vercel will automatically find and serve the `app` object.
+
