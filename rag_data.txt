@@ -1,26 +1,309 @@
-Creator's Name: K Sai Venkat Krishna
-Creator's Email: saivenkatkrishna2004@gmail.com
-Creator's Phone: <Your Phone Number>
-Creator's LinkedIn: https://www.linkedin.com/in/sai-venkat-krishna-kalvacherla-a0a4b2272/
-Creator's Portfolio: https://portfolio-eight-sepia-72.vercel.app/
-Creator's GitHub: https://github.com/SVK004
+Creator Name: K Sai Venkat Krishna
 
-About the creator: A motivated Computer Science undergraduate specializing in AI & ML. My core experience lies in architecting and developing robust backend systems with Node.js, FastAPI, and MongoDB. As a tech freak and cybersecurity enthusiast, I am constantly exploring new technologies and security principles to build secure, innovative solutions. My project portfolio demonstrates a strong capability in integrating cutting-edge technologies like Large Language Models (LLMs) to build practical, real-world tools. I am passionate about system design and eager to contribute my skills to a challenging development role.
-Education: B.Tech in Computer Science (AI & ML) from Keshav Memorial Engineering College, expected graduation March 2026 with a CGPA of 8.40.
-Education: Intermediate from Sri Chaitanya Junior Kalasala, graduated March 2022 with a percentage of 94.3.
-Education: Schooling from Takshasila Public School, graduated March 2020 with a GPA of 8.2.
-Work Experience: Cybersecurity Intern at Armour AI.
-Internship Task: Developing phishing simulation tools and fish tag applications.
-Internship Task: Building a cybersecurity compliance website by linking multiple external APIs.
-Internship Task: Implementing security best practices and automation for monitoring and compliance.
-Internship Task: Collaborating with the team to design and improve backend systems for cybersecurity projects.
-Project SmartTask AI: An LLM-Powered Task Planner. It was a full-stack task planner using Ollama, CrewAI, and FastAPI. Integrates with Google Calendar for auto-scheduling.
-Project RedactPDF: An Agentic AI PDF Redaction Tool developed with LangChain and CrewAI. Features a FastAPI backend and a React interface.
-Project Emotion Recognizer: A Speech-Based ML App that classifies emotions from speech using MFCC and NLP features. It has a REST API in Flask and a React frontend.
-Project Word Matching Game: Developed an accessible word game for dyslexic and autistic learners using React and Pixi.js. Deployed via Vercel.
-Project Nyaay Sahaayak: A user-friendly legal advisory platform using a regex-based query strategy to interpret user input.
-Skills in Programming Languages: Java, C++, C, Python, JavaScript.
-Skills in Web Technologies: React, Node.js, Express.js, HTML, CSS.
-Skills in Databases: MySQL, MongoDB.
-Skills in Cloud & Tools: AWS basics (S3, EC2), Git, GitHub, Docker, Postman, GCP.
-Skills in Concepts: Data Structures & Algorithms, Problem Solving, System Design.
+Contact Information:
+Email: [saivenkatkrishna2004@gmail.com](mailto:saivenkatkrishna2004@gmail.com)
+LinkedIn: https://www.linkedin.com/in/sai-venkat-krishna-kalvacherla-a0a4b2272/
+GitHub: https://github.com/SVK004
+Portfolio: https://svk-portfolio-007.vercel.app/
+
+---
+
+
+Professional Summary:
+K Sai Venkat Krishna is a Computer Science undergraduate specializing in Artificial Intelligence and Machine Learning. He has experience in backend development, AI-powered applications, cybersecurity tooling, cloud technologies, and full-stack development. His interests include AI, Machine Learning, Cybersecurity, System Design, Data Structures and Algorithms, and Software Engineering. He enjoys building practical solutions that combine modern AI technologies with scalable software systems.
+
+Education:
+Institution: Keshav Memorial Engineering College
+Degree: Bachelor of Technology (B.Tech)
+Branch: Computer Science and Engineering (Artificial Intelligence and Machine Learning)
+CGPA: 8.33
+Graduation Year: 2026
+
+Institution: Sri Chaitanya Junior Kalasala
+Qualification: Intermediate
+Percentage: 94.3%
+Graduation Year: 2022
+
+Institution: Takshasila Public School
+Qualification: School Education
+GPA: 8.2
+Graduation Year: 2020
+
+Work Experience:
+Company: Armour AI
+Role: Cybersecurity Intern
+
+Responsibilities:
+
+* Developed cybersecurity compliance solutions.
+* Built phishing simulation and security awareness tools.
+* Developed fish-tag applications.
+* Integrated external cybersecurity APIs.
+* Implemented security monitoring and compliance automation.
+* Designed and improved backend systems for cybersecurity projects.
+
+Cybersecurity Compliance Platform:
+Company: Armour AI
+
+Description:
+Developed a cybersecurity compliance platform that integrates multiple security scanning tools and APIs.
+
+Technologies Used:
+
+* Deno
+* TypeScript
+* MySQL
+* OpenAI API
+* OWASP ZAP
+* Prowler
+* Google Cloud Platform
+
+Key Features:
+
+* Vulnerability scanning
+* SSL analysis
+* Security header analysis
+* Cloud security assessments
+* Role Based Access Control (RBAC)
+* Compliance reporting
+* AI-powered remediation suggestions
+
+Current Employment Status:
+Selected for EPAM Systems Trainee Program.
+Joining Date: June 2026.
+
+Projects:
+
+
+Project Name: SmartTask AI
+
+Description:
+An LLM-powered task planning and scheduling platform that automates task organization and calendar management.
+
+Technologies:
+
+* FastAPI
+* CrewAI
+* LangChain
+* Ollama
+* React
+* Google Calendar API
+
+Features:
+
+* AI-powered task planning
+* Multi-agent workflow
+* Automatic scheduling
+* Google Calendar integration
+
+---
+
+Project Name: RedactPDF
+
+Description:
+An Agentic AI PDF redaction platform that automatically identifies and redacts sensitive information from PDF documents.
+
+Technologies:
+
+* FastAPI
+* CrewAI
+* LangChain
+* PyPDF2
+* React
+
+Features:
+
+* Automated PDF redaction
+* Sensitive information detection
+* AI-assisted document processing
+
+---
+
+Project Name: Employee Management System
+
+Description:
+A backend application for managing employees with secure authentication and role-based access control.
+
+Technologies:
+
+Java
+Spring Boot
+MySQL
+Spring Data JPA
+JWT
+
+Features:
+
+RESTful APIs for employee management
+Role-based access control
+JWT authentication and authorization
+MySQL database integration using Spring Data JPA
+MVC architecture-based backend design
+
+GitHub:
+https://github.com/SVK004/Employee-Management-System-SpringBoot
+
+---
+
+Project Name: Emotion Recognizer
+
+Description:
+A machine learning application that detects emotions from speech recordings.
+
+Technologies:
+
+* Python
+* Flask
+* React
+* Librosa
+* NumPy
+
+Features:
+
+* Speech emotion recognition
+* REST API backend
+* Interactive frontend
+
+---
+
+Project Name: Word Matching Game
+
+Description:
+An educational game designed to assist dyslexic and autistic learners.
+
+Technologies:
+
+* React
+* Pixi.js
+
+Features:
+
+* Interactive gameplay
+* Accessibility-focused design
+* Browser-based deployment
+
+---
+
+Project Name: Nyaay Sahaayak
+
+Description:
+A legal assistance platform that helps users understand legal concepts and queries.
+
+Technologies:
+
+* React
+* Node.js
+* MongoDB
+
+Features:
+
+* Legal query assistance
+* Rule-based interpretation
+* User-friendly interface
+
+Skills:
+
+Programming Languages:
+
+* Java
+* Python
+* JavaScript
+* C++
+* C
+
+Web Technologies:
+
+* React
+* Node.js
+* Express.js
+* HTML
+* CSS
+
+Backend Development:
+
+* FastAPI
+* Flask
+* REST APIs
+* Authentication
+* RBAC
+
+Artificial Intelligence:
+
+* Large Language Models (LLMs)
+* LangChain
+* CrewAI
+* Retrieval-Augmented Generation (RAG)
+* Ollama
+* Prompt Engineering
+
+Databases:
+
+* MySQL
+* MongoDB
+* SQLAlchemy
+
+Cloud and DevOps:
+
+* Docker
+* Google Cloud Platform (GCP)
+* AWS EC2
+* AWS S3
+
+Cybersecurity:
+
+* OWASP ZAP
+* Prowler
+* Security Headers Analysis
+* SSL Analysis
+* Vulnerability Assessment
+
+Developer Tools:
+
+* Git
+* GitHub
+* Postman
+* VS Code
+
+Core Concepts:
+
+* Data Structures and Algorithms
+* Object-Oriented Programming
+* System Design
+* Problem Solving
+* Software Engineering
+
+Languages Spoken:
+
+* English
+* Telugu
+* Hindi
+
+Hobbies:
+
+* Reading Science Fiction
+* Speedcubing
+* Playing Guitar
+* Playing Video Games
+
+Frequently Asked Questions:
+
+Question: Who is Venkat?
+Answer: Venkat is a Computer Science undergraduate specializing in AI and Machine Learning with interests in software engineering, AI, and cybersecurity.
+
+Question: What is Venkat's B.E CGPA?
+Answer: 8.33.
+
+Question: Where does Venkat study?
+Answer: Keshav Memorial Engineering College.
+
+Question: What internship experience does Venkat have?
+Answer: Cybersecurity Intern at Armour AI.
+
+Question: What technologies does Venkat work with?
+Answer: FastAPI, React, Node.js, Python, Java, Docker, MongoDB, MySQL, LangChain, CrewAI, Ollama, Spring Boot, and cloud technologies.
+
+Question: What are Venkat's strongest areas?
+Answer: Venkat's strongest areas include Backend Development, Artificial Intelligence, Cybersecurity, Data Engineering, System Design, and Full-Stack Development.
+
+Question: What type of roles is Venkat interested in?
+Answer: Software Engineering, Backend Development, AI Engineering, Machine Learning Engineering, Data Engineering and Analyst, and Cybersecurity-related roles.

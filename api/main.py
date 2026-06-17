@@ -38,7 +38,7 @@ def load_rag_data(file_name="rag_data.txt"):
 # --- END OF FILE LOADING ---
 
 RAG_DATA_SOURCE = load_rag_data()
-API_URL = "https://router.huggingface.co/featherless-ai/v1/completions"
+API_URL = "https://router.huggingface.co/v1/chat/completions"
 headers = {
     "Authorization": f"Bearer {os.getenv('HUGGINGFACE_API_KEY')}",
 }
@@ -141,11 +141,13 @@ If the answer is in the KNOWLEDGE BASE, you MUST use it. Do not say you do not k
 <|eot_id|><|start_header_id|>assistant<|end_header_id|>"""
         
         output = queryyy({
-    "model": "meta-llama/Meta-Llama-3.1-8B-Instruct", # Example model
-    "prompt": llama_prompt, # Add your RAG data here
+    "model": "meta-llama/Llama-3.1-8B-Instruct:featherless-ai", # Example model
+    "messages": [{
+        "role": "user",
+        "content": llama_prompt
+        }], # Add your RAG data here
     "temperature": 0.2,
-    "max_tokens": 100,
-    "stop": ["<|eot_id|>"]
+    "max_tokens": 100
 })
         print(output)
 
@@ -163,7 +165,7 @@ If the answer is in the KNOWLEDGE BASE, you MUST use it. Do not say you do not k
         # 1. Check if the API actually gave us 'choices'
         if 'choices' in output and len(output['choices']) > 0:
             # 2. Extract the 'text' field (Completions API uses 'text', not 'message')
-            bot_text = output['choices'][0]['text'].strip()
+            bot_text = output['choices'][0]['message']['content']
             
             # 3. Clean up any leftover Llama 3 instruct tags if they leaked
             tags_to_clean = ["<|start_header_id|>assistant<|end_header_id|>", "<|eot_id|>", "assistant"]
