@@ -4,8 +4,8 @@ from pydantic import BaseModel
 # import google.generativeai as genai
 import requests
 from fastapi.middleware.cors import CORSMiddleware
-# from dotenv import load_dotenv
-# load_dotenv()
+from dotenv import load_dotenv
+load_dotenv()
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -32,7 +32,7 @@ def load_rag_data(file_name="rag_data.txt"):
         with open(file_path, "r", encoding="utf-8") as f:
             print(f"Successfully loaded data from: {file_path}")
             return f.read()
-    except FileNotFoundError:
+    except Exception as e:
         print(f"CRITICAL ERROR: Could not find the data file at {file_path}. Ensure 'rag_data.txt' is in the root and included in vercel.json.")
         return ""
 # --- END OF FILE LOADING ---
@@ -46,7 +46,7 @@ def queryyy(payload):
     response = requests.post(API_URL, headers=headers, json=payload)
     return response.json()
 
-knowledge_chunks = [line.strip() for line in RAG_DATA_SOURCE.splitlines() if line.strip()]
+knowledge_chunks = [line.strip() for line in RAG_DATA_SOURCE.split("---") if line.strip()]
 
 # --- Gemini API Setup ---
 # api_key = os.getenv("GEMINI_API_KEY")
@@ -70,98 +70,106 @@ class Query(BaseModel):
 @app.post("/api/chat")
 def chat_endpoint(query: Query):
     print(f"HuggingFace key: {os.getenv('HUGGINGFACE_API_KEY')}")
+    user_query_lower = query.userQuery.lower()
     user_query = query.userQuery
-    # if not model:
-    #     raise HTTPException(status_code=503, detail="Gemini API model is not initialized on the server.")
-    # if not user_query:
-    #     raise HTTPException(status_code=400, detail="Query cannot be empty.")
-    # if not knowledge_chunks: 
-    #     raise HTTPException(status_code=503, detail="Knowledge base is empty. Check if rag_data.txt was loaded correctly.")
-
     try:
-        user_query_lower = user_query.lower()
-        context = ""
-        found_category = False
+        stop_words = {
+    "a", "an", "the", "in", "on", "of", "what", "is",
+    "who", "where", "when", "tell", "me", "about",
+    "for", "this", "that", "with", "by", "has"
+}
 
-        # 1. Define categories and their keywords/file prefixes
-        category_map = {
-            'Project:': ('project', 'projects', 'work', 'built', 'develop'),
-            'Skills in': ('skill', 'skills', 'knows', 'proficient', 'technologies'),
-            'Education:': ('education', 'school', 'college', 'degree', 'study'),
-            'Work Experience:': ('experience', 'intern', 'internship', 'job'),
-            'Internship Task:': ('task', 'tasks', 'duties', 'responsibilities')
-        }
+        meaningful_words = [
+            word
+            for word in user_query_lower.split()
+            if word not in stop_words
+        ]
 
-        # 2. Check if the user is asking for a specific category
-        for prefix, keywords in category_map.items():
-            if any(keyword in user_query_lower for keyword in keywords):
-                # If a category keyword is found, gather ALL matching lines
-                matching_chunks = [chunk for chunk in knowledge_chunks if chunk.strip().startswith(prefix)]
-                if matching_chunks:
-                    context = "\n".join(matching_chunks)
-                    found_category = True
-                    break # Stop after finding the first relevant category
+        ranked_chunks = sorted(
+            knowledge_chunks,
+            key=lambda chunk: sum(
+                word in chunk.lower()
+                for word in meaningful_words
+            ),
+            reverse=True
+        )
 
-        # 3. If no specific category was found, fall back to the general keyword search
-        if not found_category:
-            stop_words = set(["a", "an", "the", "in", "on", "of", "what", "is", "who", "where", "when", "tell", "me", "about", "for", "this", "that", "with", "by", "has"])
-            meaningful_words = [word for word in user_query_lower.split() if word not in stop_words]
+        top_chunks = ranked_chunks[:3]
+
+        context = "\n\n".join(top_chunks)
+
+        print("\n========== DEBUG ==========")
+        print("Query:", user_query)
+        print("\nMeaningful Words:", meaningful_words)
+
+        for i, chunk in enumerate(top_chunks, start=1):
+            print(f"\n--- Chunk {i} ---")
+            print(chunk[:500])
+
+        print("===========================\n")
             
-            ranked_chunks = sorted(
-                knowledge_chunks,
-                key=lambda chunk: sum((word in chunk.lower() or (word.endswith('s') and word[:-1] in chunk.lower())) for word in meaningful_words),
-                reverse=True
-            )
-            # Use a larger context window for general questions
-            context = "\n".join(ranked_chunks[:5])
-
-        prompt = f"""Based ONLY on the following information, answer the user's question concisely.
-If the information required to answer the question is not in the context, say that you do not have enough information to answer.
-
-CONTEXT:
-{context}
-
-QUESTION:
-{user_query}"""
-        
 
         llama_prompt = f"""<|begin_of_text|><|start_header_id|>system<|end_header_id|>
 
-You are an expert Portfolio Assistant for Venkat. Use the strictly provided KNOWLEDGE BASE below to answer. 
-If the answer is in the KNOWLEDGE BASE, you MUST use it. Do not say you do not know if the info is present.
+    You are Venkat's Portfolio Assistant.
 
-# KNOWLEDGE BASE:
-{context}
+    Your purpose is to answer questions about Venkat's education, experience, projects, skills, achievements, and career interests.
 
-<|eot_id|><|start_header_id|>user<|end_header_id|>
+    Use the KNOWLEDGE BASE as the primary source of truth.
 
-## USER QUESTION:
-{user_query}
+    Guidelines:
 
-<|eot_id|><|start_header_id|>assistant<|end_header_id|>"""
+    1. Prefer information from the KNOWLEDGE BASE whenever available.
+    2. You may rephrase and summarize information naturally.
+    3. Do not invent companies, degrees, certifications, years of experience, achievements, or projects.
+    4. If a question asks for information that is not available in the KNOWLEDGE BASE, politely say that the information is not available.
+    5. Keep responses concise and professional.
+    6. When discussing projects, mention technologies and key features when relevant.
+    7. When discussing skills or experience, use only information present in the KNOWLEDGE BASE.
+
+    KNOWLEDGE BASE:
+    {context}
+
+    USER QUESTION:
+    {user_query}
+
+
+    <|eot_id|><|start_header_id|>assistant<|end_header_id|>"""
         
+        payload = {
+        "model": "meta-llama/Llama-3.1-8B-Instruct:featherless-ai", # Example model
+        "messages": [{
+            "role": "user",
+            "content": llama_prompt
+            }], # Add your RAG data here
+        "temperature": 0.2,
+        "max_tokens": 100
+        }
+            
+
+        print("========== CONTEXT ==========")
+        print(context)
+        print("=============================")
+
         output = queryyy({
-    "model": "meta-llama/Llama-3.1-8B-Instruct:featherless-ai", # Example model
-    "messages": [{
-        "role": "user",
-        "content": llama_prompt
-        }], # Add your RAG data here
-    "temperature": 0.2,
-    "max_tokens": 100
-})
+        "model": "meta-llama/Llama-3.1-8B-Instruct:featherless-ai", # Example model
+        "messages": [{
+            "role": "user",
+            "content": llama_prompt
+            }], # Add your RAG data here
+        "temperature": 0.2,
+        "max_tokens": 100
+    })
         print(output)
-
-
-
-        # Switched to the synchronous SDK call
-        # response = requests.post(API_URL, headers = headers, json=payload, timeout=20)
-        # print(f"Status: {response.status_code} | Response: {response.text}")
-        # if response.status_code != 200:
-        #     raise HTTPException(status_code=500, detail="Hugging Face API Error")
+            # Switched to the synchronous SDK call
+        response = requests.post(API_URL, headers = headers, json=payload, timeout=20)
+        print(f"Status: {response.status_code} | Response: {response.text}")
+        if response.status_code != 200:
+            raise HTTPException(status_code=500, detail="Hugging Face API Error")
         
-        # result = response.json()
-        # print("botResponse", result)
-        # print("botResponse", result[0]['choices'][0]["message"]["content"].strip())
+        result = response.json()
+        print("botResponse", result)
+        print("botResponse", result['choices'][0]["message"]["content"].strip())
         # 1. Check if the API actually gave us 'choices'
         if 'choices' in output and len(output['choices']) > 0:
             # 2. Extract the 'text' field (Completions API uses 'text', not 'message')
