@@ -13,5 +13,6 @@
   ],
   "routes": [
     { "src": "/api/chat", "dest": "api/main.py" }
+    { "src": "/images/(.*)", "dest": "/images/$1" }
   ]
 }
