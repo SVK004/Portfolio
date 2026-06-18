@@ -1,8 +1,25 @@
 {
   "version": 3,
-  "functions": {
-    "api/main.py": {
-      "runtime": "@vercel/python"
+  "builds": [
+    {
+      "src": "api/main.py",
+      "use": "@vercel/python",
+      "config": {
+        "includeFiles": [
+          "rag_data.txt",
+          "images/**"
+        ]
+      }
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
     }
-  }
+  ],
+  "routes": [
+    {
+      "src": "/api/chat",
+      "dest": "api/main.py"
+    }
+  ]
 }
